@@ -1,0 +1,11 @@
+{
+  "name": "recipez-gql",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:mvlhotra/recipez-gql.git",
+  "author": "Nik Malhotra <nmal@me.com>",
+  "license": "MIT",
+  "dependencies": {
+    "graphql-yoga": "^1.17.4"
+  }
+}
