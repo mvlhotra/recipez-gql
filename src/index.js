@@ -13,226 +13,150 @@ async function main() {
 
   // Read all links from the database and print them to the console
   const allLinks = await prisma.links()
+
+  // Create a new user
+  const newUser = await prisma.createUser({
+    first_name: "Nik",
+    last_name: "Mal",
+    email: "wet_dog@hotmail.com",
+    password: "dogs4life"
+  })
+  console.log(`Created new user: ${newUser.first_name} (ID: ${newUser.id})`)
+
+  // Read all users from the database and print them to the console
+  const allUsers = await prisma.users()
+
+  // Create a new creation
+  const newCreation = await prisma.createCreation({
+    user_id: 1,
+    name: "Big Bertha",
+    description: "lolol"
+  })
+  console.log(`Created new creation: ${newCreation.name} (ID: ${newCreation.id})`)
+
+  // Read all creations from the database and print them to the console
+  const allCreations = await prisma.creations()
+
+  // Create a new comment
+  const newComment = await prisma.createComment({
+    user_id: 1,
+    text: "hey this looks great."
+  })
+  console.log(`Created new comment: ${newComment.text} (ID: ${newComment.id})`)
+
+  // Read all comments from the database and print them to the console
+  const allComments = await prisma.comments()
+
+  // Create a new Ingredient Type
+  const newIngredientType = await prisma.createIngredient_Type({
+    name: "Legumes"
+  })
+  console.log(`Created new ingredient_type: ${newIngredientType.name} (ID: ${newIngredientType.id})`)
+
+  // Read all Ingredient Types from the database and print them to the console
+  const allIngredientTypes = await prisma.ingredient_Types()
+
+  // Create a new Ingredient
+  const newIngredient = await prisma.createIngredient({
+    ingredient_type_id: 1,
+    name: "Peanut"
+  })
+  console.log(`Created new ingredient_type: ${newIngredient.name} (ID: ${newIngredient.id})`)
+
+  // Read all Ingredient Types from the database and print them to the console
+  const allIngredients = await prisma.ingredients()
+
+  // Create a new saved recipe
+  const newSavedRecipe = await prisma.createSaved_Recipe({
+    user_id: 1,
+    recipe_link: 'www.google.com'
+  })
+  console.log(`Created new saved recipe: ${newSavedRecipe.recipe_link} (ID: ${newSavedRecipe.id})`)
+
+  // Read all Ingredient Types from the database and print them to the console
+  const allSavedRecipes = await prisma.saved_Recipes()
+
   console.log(allLinks)
+  console.log(allUsers)
+  console.log(allCreations)
+  console.log(allComments)
+  console.log(allIngredientTypes)
+  console.log(allIngredients)
+  console.log(allSavedRecipes)
 }
 
 main().catch(e => console.error(e))
 
 
-let links = [{
-  id: 'link-0',
-  url: 'www.howtographql.com',
-  description: 'Fullstack tutorial for GraphQL'
-},
-{
-  id: 'link-1',
-  url: 'www.howtographql.com',
-  description: 'Fullstack tutorial for GraphQL'
-},
-{
-  id: 'link-2',
-  url: 'www.howtographql.com',
-  description: 'Fullstack tutorial for GraphQL'
-}
-]
-
-let users = [{
-  "id": 1,
-  "first_name": "Lowe",
-  "last_name": "Shaul",
-  "email": "lshaul0@soup.io",
-  "password": "iNTVLKP0"
-}, {
-  "id": 2,
-  "first_name": "Kriste",
-  "last_name": "Paull",
-  "email": "kpaull1@amazon.co.jp",
-  "password": "bioQhyJC"
-}, {
-  "id": 3,
-  "first_name": "Calypso",
-  "last_name": "Bennallck",
-  "email": "cbennallck2@mit.edu",
-  "password": "e8LuC2"
-}]
-
-let creations = [{
-  "id": 1,
-  "user_id": 1,
-  "name": "Showy Spleenwort",
-  "description": "Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.\n\nMorbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem."
-}, {
-  "id": 2,
-  "user_id": 1,
-  "name": "South African Lovegrass",
-  "description": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo."
-}, {
-  "id": 3,
-  "user_id": 2,
-  "name": "Ferntree",
-  "description": "Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.\n\nQuisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus."
-}, {
-  "id": 4,
-  "user_id": 1,
-  "name": "Canyon Bird's-foot Trefoil",
-  "description": "Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl."
-}, {
-  "id": 5,
-  "user_id": 1,
-  "name": "Christmas Cactus",
-  "description": "Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.\n\nProin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem."
-}, {
-  "id": 6,
-  "user_id": 3,
-  "name": "Cowparsnip",
-  "description": "Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum."
-}]
-
-let comments = [{
-  "id": 1,
-  "user_id": 2,
-  "text": "Sed sagittis. Nam congue, risus semper porta volutpat, quam pede lobortis ligula, sit amet eleifend pede libero quis orci. Nullam molestie nibh in lectus.\n\nPellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus."
-}, {
-  "id": 2,
-  "user_id": 3,
-  "text": "Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.\n\nFusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem."
-}, {
-  "id": 3,
-  "user_id": 2,
-  "text": "Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.\n\nProin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.\n\nDuis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit."
-}]
-
-let saved_recipes = [{
-  "id": 1,
-  "user_id": 3,
-  "recipe_link": "https://scientificamerican.com/mattis.png"
-}, {
-  "id": 2,
-  "user_id": 1,
-  "recipe_link": "http://craigslist.org/lacinia/erat/vestibulum/sed/magna.json"
-}, {
-  "id": 3,
-  "user_id": 2,
-  "recipe_link": "http://blinklist.com/etiam/vel/augue/vestibulum/rutrum/rutrum.aspx"
-}]
-
-let ingredient_types = [{
-  "id": 1,
-  "name": "Fruit"
-}, {
-  "id": 2,
-  "name": "Vegetable"
-}]
-
-let ingredients = [{
-  "id": 1,
-  "ingredient_type_id": 2,
-  "name": "Mushroom"
-}, {
-  "id": 2,
-  "ingredient_type_id": 2,
-  "name": "Green Pepper"
-}, {
-  "id": 3,
-  "ingredient_type_id": 2,
-  "name": "Cucumber"
-}, {
-  "id": 4,
-  "ingredient_type_id": 1,
-  "name": "Apple"
-}, {
-  "id": 5,
-  "ingredient_type_id": 1,
-  "name": "Blackberry"
-}, {
-  "id": 6,
-  "ingredient_type_id": 1,
-  "name": "Strawberry"
-}]
-
-let linkCount = links.length
-let userCount = users.length
-let creationCount = creations.length
-let commentCount = comments.length
-let savedRecipeCount = saved_recipes.length
-let ingredientCount = ingredients.length
-let ingredientTypeCount = ingredient_types.length
-
 const resolvers = {
   Query: {
     info: () => `This is the API of a Hackernews Clone`,
-    feed: () => links,
-    user: () => users,
-    creation: () => creations,
-    comment: () => comments,
-    savedRecipe: () => saved_recipes,
-    ingredientType: () => ingredient_types,
-    ingredient: () => ingredients
+    feed: (root, args, context, info) => {
+      return context.prisma.links()
+    },
+    user: (root, args, context, info) => {
+      return context.prisma.users()
+    },
+    creation: (root, args, context, info) => {
+      return context.prisma.creations()
+    },
+    comment: (root, args, context, info) => {
+      return context.prisma.comments()
+    },
+    savedRecipe: (root, args, context, info) => {
+      return context.prisma.saved_Recipes()
+    },
+    ingredientType: (root, args, context, info) => {
+      return context.prisma.ingredient_Types()
+    },
+    ingredient: (root, args, context, info) => {
+      return context.prisma.ingredients()
+    },
   },
   Mutation: {
-    post: (parent, args) => {
-      const link = {
-        id: `link-${++linkCount}`,
-        description: args.description,
+    post: (root, args, context) => {
+      return context.prisma.createLink({
         url: args.url,
-      }
-      links.push(link)
-      return link
+        description: args.description,
+      })
     },
-    postUser: (parent, args) => {
-      const user = {
-        id: `${++userCount}`,
+    postUser: (root, args, context) => {
+      return context.prisma.createUser({
         first_name: args.first_name,
         last_name: args.last_name,
         email: args.email,
         password: args.password,
-      }
-      users.push(user)
-      return user
+      })
     },
-    postComment: (parent, args) => {
-      const comment = {
-        id: `${++commentCount}`,
+    postComment: (root, args, context) => {
+      return context.prisma.createComment({
         user_id: args.user_id,
         text: args.text
-      }
-      comments.push(comment)
-      return comment
+      })
     },
-    postSavedRecipe: (parent, args) => {
-      const recipe = {
-        id: `${++savedRecipeCount}`,
+    postSavedRecipe: (root, args, context) => {
+      return context.prisma.createSavedRecipe({
         user_id: args.user_id,
         recipe_link: args.recipe_link
-      }
-      saved_recipes.push(recipe)
-      return recipe
+      })
     },
-    postIngredientType: (parent, args) => {
-      const ingredientType = {
-        id: `${++ingredientTypeCount}`,
+    postIngredientType: (root, args, context) => {
+      return context.prisma.createIngredientType({
         name: args.name
-      }
-      ingredient_types.push(ingredientType)
-      return ingredientType
+      })
     },
-    postIngredient: (parent, args) => {
-      const ingredient = {
-        id: `${++ingredientCount}`,
+    postIngredient: (root, args, context) => {
+      return context.prisma.createIngredient({
+        ingredient_type_id: arg.ingredient_type_id,
         name: args.name
-      }
-      ingredients.push(ingredient)
-      return ingredient
+      })
     },
-    postCreation: (parent, args) => {
-      const creation = {
-        id: `${++creationCount}`,
+    postCreation: (root, args, context) => {
+      return context.prisma.createCreation({
         user_id: args.user_id,
-        name: args.nam,
+        name: args.name,
         description: args.description
-      }
-      creations.push(creation)
-      return creation
+      })
     },
   },
 }

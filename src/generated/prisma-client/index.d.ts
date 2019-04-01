@@ -462,8 +462,6 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "user_id_ASC"
-  | "user_id_DESC"
   | "first_name_ASC"
   | "first_name_DESC"
   | "last_name_ASC"
@@ -661,7 +659,6 @@ export interface Ingredient_TypeUpdateInput {
 }
 
 export interface UserUpdateManyMutationInput {
-  user_id?: Int;
   first_name?: String;
   last_name?: String;
   email?: String;
@@ -673,7 +670,6 @@ export interface Ingredient_TypeCreateInput {
 }
 
 export interface UserCreateInput {
-  user_id: Int;
   first_name: String;
   last_name: String;
   email: String;
@@ -939,14 +935,6 @@ export interface UserWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  user_id?: Int;
-  user_id_not?: Int;
-  user_id_in?: Int[] | Int;
-  user_id_not_in?: Int[] | Int;
-  user_id_lt?: Int;
-  user_id_lte?: Int;
-  user_id_gt?: Int;
-  user_id_gte?: Int;
   first_name?: String;
   first_name_not?: String;
   first_name_in?: String[] | String;
@@ -1034,7 +1022,6 @@ export interface Saved_RecipeUpdateInput {
 }
 
 export interface UserUpdateInput {
-  user_id?: Int;
   first_name?: String;
   last_name?: String;
   email?: String;
@@ -1062,7 +1049,6 @@ export interface NodeNode {
 
 export interface UserPreviousValues {
   id: ID_Output;
-  user_id: Int;
   first_name: String;
   last_name: String;
   email: String;
@@ -1073,7 +1059,6 @@ export interface UserPreviousValuesPromise
   extends Promise<UserPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  user_id: () => Promise<Int>;
   first_name: () => Promise<String>;
   last_name: () => Promise<String>;
   email: () => Promise<String>;
@@ -1084,7 +1069,6 @@ export interface UserPreviousValuesSubscription
   extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  user_id: () => Promise<AsyncIterator<Int>>;
   first_name: () => Promise<AsyncIterator<String>>;
   last_name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
@@ -1251,7 +1235,6 @@ export interface IngredientSubscription
 
 export interface User {
   id: ID_Output;
-  user_id: Int;
   first_name: String;
   last_name: String;
   email: String;
@@ -1260,7 +1243,6 @@ export interface User {
 
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
-  user_id: () => Promise<Int>;
   first_name: () => Promise<String>;
   last_name: () => Promise<String>;
   email: () => Promise<String>;
@@ -1271,7 +1253,6 @@ export interface UserSubscription
   extends Promise<AsyncIterator<User>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  user_id: () => Promise<AsyncIterator<Int>>;
   first_name: () => Promise<AsyncIterator<String>>;
   last_name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
