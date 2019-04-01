@@ -1,5 +1,7 @@
 const { GraphQLServer } = require('graphql-yoga')
 
+
+
 let links = [{
   id: 'link-0',
   url: 'www.howtographql.com',
@@ -151,7 +153,7 @@ const resolvers = {
     ingredient: () => ingredients
   },
   Mutation: {
-    createLink: (parent, args) => {
+    post: (parent, args) => {
       const link = {
         id: `link-${++linkCount}`,
         description: args.description,
@@ -160,15 +162,7 @@ const resolvers = {
       links.push(link)
       return link
     },
-    deleteLink: (parent, args) => {
-      links.forEach((link, ind) => {
-        if (link.id === args.id) {
-          links.splice(ind, 1)
-        }
-      })
-      return ('removed', args.id)
-    },
-    createUser: (parent, args) => {
+    postUser: (parent, args) => {
       const user = {
         id: `${++userCount}`,
         first_name: args.first_name,
@@ -179,7 +173,7 @@ const resolvers = {
       users.push(user)
       return user
     },
-    createComment: (parent, args) => {
+    postComment: (parent, args) => {
       const comment = {
         id: `${++commentCount}`,
         user_id: args.user_id,
@@ -188,7 +182,7 @@ const resolvers = {
       comments.push(comment)
       return comment
     },
-    createSavedRecipe: (parent, args) => {
+    postSavedRecipe: (parent, args) => {
       const recipe = {
         id: `${++savedRecipeCount}`,
         user_id: args.user_id,
@@ -197,7 +191,7 @@ const resolvers = {
       saved_recipes.push(recipe)
       return recipe
     },
-    createIngredientType: (parent, args) => {
+    postIngredientType: (parent, args) => {
       const ingredientType = {
         id: `${++ingredientTypeCount}`,
         name: args.name
@@ -205,7 +199,7 @@ const resolvers = {
       ingredient_types.push(ingredientType)
       return ingredientType
     },
-    createIngredient: (parent, args) => {
+    postIngredient: (parent, args) => {
       const ingredient = {
         id: `${++ingredientCount}`,
         name: args.name
@@ -213,7 +207,7 @@ const resolvers = {
       ingredients.push(ingredient)
       return ingredient
     },
-    createCreation: (parent, args) => {
+    postCreation: (parent, args) => {
       const creation = {
         id: `${++creationCount}`,
         user_id: args.user_id,
