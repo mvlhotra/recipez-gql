@@ -2,14 +2,16 @@ type Link {
   id: ID! @unique
   description: String!
   url: String!
+  postedBy: User
 }
 
 type User {
   id: ID! @unique
   first_name: String!
   last_name: String!
-  email: String!
+  email: String! @unique
   password: String!
+  links: [Link!]!
 }
 
 type Creation {

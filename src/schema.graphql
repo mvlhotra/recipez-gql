@@ -14,6 +14,8 @@ type Query {
 
 type Mutation {
   post(url: String!, description: String!): Link!
+  signup(first_name: String!, last_name: String!, email: String!, password: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
 
   postUser(first_name: String!, last_name: String!, email: String!, password: String!): User!
 
@@ -28,19 +30,25 @@ type Mutation {
   postIngredient(ingredient_type_id: Int!, name: String!): Ingredient!
 }
 
+type AuthPayload {
+  token: String
+  user: User
+}
+
 type Link {
   id: ID!
   description: String!
   url: String!
+  postedBy: User
 }
 
 type User {
   id: ID!
-  user_id: Int!
   first_name: String!
   last_name: String!
   email: String!
   password: String!
+  links: [Link!]!
 }
 
 type Creation {
