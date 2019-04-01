@@ -163,7 +163,8 @@ const resolvers = {
   Query,
   Mutation,
   User,
-  Link
+  Link,
+  Creation,
 }
 
 const server = new GraphQLServer({

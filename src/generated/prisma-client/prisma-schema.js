@@ -152,9 +152,9 @@ input CommentWhereUniqueInput {
 
 type Creation {
   id: ID!
-  user_id: Int!
   name: String!
   description: String!
+  createdBy: User
 }
 
 type CreationConnection {
@@ -164,7 +164,17 @@ type CreationConnection {
 }
 
 input CreationCreateInput {
-  user_id: Int!
+  name: String!
+  description: String!
+  createdBy: UserCreateOneWithoutCreationsInput
+}
+
+input CreationCreateManyWithoutCreatedByInput {
+  create: [CreationCreateWithoutCreatedByInput!]
+  connect: [CreationWhereUniqueInput!]
+}
+
+input CreationCreateWithoutCreatedByInput {
   name: String!
   description: String!
 }
@@ -177,8 +187,6 @@ type CreationEdge {
 enum CreationOrderByInput {
   id_ASC
   id_DESC
-  user_id_ASC
-  user_id_DESC
   name_ASC
   name_DESC
   description_ASC
@@ -191,42 +199,11 @@ enum CreationOrderByInput {
 
 type CreationPreviousValues {
   id: ID!
-  user_id: Int!
   name: String!
   description: String!
 }
 
-type CreationSubscriptionPayload {
-  mutation: MutationType!
-  node: Creation
-  updatedFields: [String!]
-  previousValues: CreationPreviousValues
-}
-
-input CreationSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: CreationWhereInput
-  AND: [CreationSubscriptionWhereInput!]
-  OR: [CreationSubscriptionWhereInput!]
-  NOT: [CreationSubscriptionWhereInput!]
-}
-
-input CreationUpdateInput {
-  user_id: Int
-  name: String
-  description: String
-}
-
-input CreationUpdateManyMutationInput {
-  user_id: Int
-  name: String
-  description: String
-}
-
-input CreationWhereInput {
+input CreationScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -241,14 +218,6 @@ input CreationWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  user_id: Int
-  user_id_not: Int
-  user_id_in: [Int!]
-  user_id_not_in: [Int!]
-  user_id_lt: Int
-  user_id_lte: Int
-  user_id_gt: Int
-  user_id_gte: Int
   name: String
   name_not: String
   name_in: [String!]
@@ -277,6 +246,122 @@ input CreationWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
+  AND: [CreationScalarWhereInput!]
+  OR: [CreationScalarWhereInput!]
+  NOT: [CreationScalarWhereInput!]
+}
+
+type CreationSubscriptionPayload {
+  mutation: MutationType!
+  node: Creation
+  updatedFields: [String!]
+  previousValues: CreationPreviousValues
+}
+
+input CreationSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CreationWhereInput
+  AND: [CreationSubscriptionWhereInput!]
+  OR: [CreationSubscriptionWhereInput!]
+  NOT: [CreationSubscriptionWhereInput!]
+}
+
+input CreationUpdateInput {
+  name: String
+  description: String
+  createdBy: UserUpdateOneWithoutCreationsInput
+}
+
+input CreationUpdateManyDataInput {
+  name: String
+  description: String
+}
+
+input CreationUpdateManyMutationInput {
+  name: String
+  description: String
+}
+
+input CreationUpdateManyWithoutCreatedByInput {
+  create: [CreationCreateWithoutCreatedByInput!]
+  delete: [CreationWhereUniqueInput!]
+  connect: [CreationWhereUniqueInput!]
+  set: [CreationWhereUniqueInput!]
+  disconnect: [CreationWhereUniqueInput!]
+  update: [CreationUpdateWithWhereUniqueWithoutCreatedByInput!]
+  upsert: [CreationUpsertWithWhereUniqueWithoutCreatedByInput!]
+  deleteMany: [CreationScalarWhereInput!]
+  updateMany: [CreationUpdateManyWithWhereNestedInput!]
+}
+
+input CreationUpdateManyWithWhereNestedInput {
+  where: CreationScalarWhereInput!
+  data: CreationUpdateManyDataInput!
+}
+
+input CreationUpdateWithoutCreatedByDataInput {
+  name: String
+  description: String
+}
+
+input CreationUpdateWithWhereUniqueWithoutCreatedByInput {
+  where: CreationWhereUniqueInput!
+  data: CreationUpdateWithoutCreatedByDataInput!
+}
+
+input CreationUpsertWithWhereUniqueWithoutCreatedByInput {
+  where: CreationWhereUniqueInput!
+  update: CreationUpdateWithoutCreatedByDataInput!
+  create: CreationCreateWithoutCreatedByInput!
+}
+
+input CreationWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  createdBy: UserWhereInput
   AND: [CreationWhereInput!]
   OR: [CreationWhereInput!]
   NOT: [CreationWhereInput!]
@@ -943,6 +1028,7 @@ type User {
   email: String!
   password: String!
   links(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Link!]
+  creations(where: CreationWhereInput, orderBy: CreationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Creation!]
 }
 
 type UserConnection {
@@ -957,6 +1043,12 @@ input UserCreateInput {
   email: String!
   password: String!
   links: LinkCreateManyWithoutPostedByInput
+  creations: CreationCreateManyWithoutCreatedByInput
+}
+
+input UserCreateOneWithoutCreationsInput {
+  create: UserCreateWithoutCreationsInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutLinksInput {
@@ -964,11 +1056,20 @@ input UserCreateOneWithoutLinksInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateWithoutCreationsInput {
+  first_name: String!
+  last_name: String!
+  email: String!
+  password: String!
+  links: LinkCreateManyWithoutPostedByInput
+}
+
 input UserCreateWithoutLinksInput {
   first_name: String!
   last_name: String!
   email: String!
   password: String!
+  creations: CreationCreateManyWithoutCreatedByInput
 }
 
 type UserEdge {
@@ -1025,6 +1126,7 @@ input UserUpdateInput {
   email: String
   password: String
   links: LinkUpdateManyWithoutPostedByInput
+  creations: CreationUpdateManyWithoutCreatedByInput
 }
 
 input UserUpdateManyMutationInput {
@@ -1032,6 +1134,15 @@ input UserUpdateManyMutationInput {
   last_name: String
   email: String
   password: String
+}
+
+input UserUpdateOneWithoutCreationsInput {
+  create: UserCreateWithoutCreationsInput
+  update: UserUpdateWithoutCreationsDataInput
+  upsert: UserUpsertWithoutCreationsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
 }
 
 input UserUpdateOneWithoutLinksInput {
@@ -1043,11 +1154,25 @@ input UserUpdateOneWithoutLinksInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateWithoutCreationsDataInput {
+  first_name: String
+  last_name: String
+  email: String
+  password: String
+  links: LinkUpdateManyWithoutPostedByInput
+}
+
 input UserUpdateWithoutLinksDataInput {
   first_name: String
   last_name: String
   email: String
   password: String
+  creations: CreationUpdateManyWithoutCreatedByInput
+}
+
+input UserUpsertWithoutCreationsInput {
+  update: UserUpdateWithoutCreationsDataInput!
+  create: UserCreateWithoutCreationsInput!
 }
 
 input UserUpsertWithoutLinksInput {
@@ -1129,6 +1254,9 @@ input UserWhereInput {
   links_every: LinkWhereInput
   links_some: LinkWhereInput
   links_none: LinkWhereInput
+  creations_every: CreationWhereInput
+  creations_some: CreationWhereInput
+  creations_none: CreationWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

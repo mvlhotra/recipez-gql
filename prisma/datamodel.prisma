@@ -12,13 +12,14 @@ type User {
   email: String! @unique
   password: String!
   links: [Link!]!
+  creations: [Creation!]!
 }
 
 type Creation {
   id: ID! @unique
-  user_id: Int!
   name: String!
   description: String!
+  createdBy: User
 }
 
 type Comment {
