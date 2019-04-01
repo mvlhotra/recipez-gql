@@ -165,6 +165,7 @@ const resolvers = {
   User,
   Link,
   Creation,
+  Comment,
 }
 
 const server = new GraphQLServer({

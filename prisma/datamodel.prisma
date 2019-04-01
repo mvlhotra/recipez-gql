@@ -13,6 +13,7 @@ type User {
   password: String!
   links: [Link!]!
   creations: [Creation!]!
+  comments: [Comment!]!
 }
 
 type Creation {
@@ -24,8 +25,9 @@ type Creation {
 
 type Comment {
   id: ID! @unique
-  user_id: Int!
   text: String!
+  addedBy: User
+  # NEED TO ADD CREATION RELATION
 }
 
 type Saved_Recipe {

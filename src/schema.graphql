@@ -19,7 +19,7 @@ type Mutation {
 
   postCreation(name: String!, description: String!): Creation!
 
-  postComment(user_id: Int!, text: String!): Comment!
+  postComment(text: String!): Comment!
 
   postSavedRecipe(user_id: Int!, recipe_link: String!): Saved_Recipe!
 
@@ -48,6 +48,7 @@ type User {
   password: String!
   links: [Link!]!
   creations: [Creation!]!
+  comments: [Comment!]!
 }
 
 type Creation {
@@ -59,8 +60,8 @@ type Creation {
 
 type Comment {
   id: ID!
-  user_id: Int!
   text: String!
+  addedBy: User
 }
 
 type Saved_Recipe {
