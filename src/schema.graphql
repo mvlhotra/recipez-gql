@@ -1,0 +1,75 @@
+type Query {
+  info: String!
+  feed: [Link!]!
+  user: [User!]!
+  comment: [Comment!]!
+  savedRecipe: [Saved_Recipe!]!
+  ingredientType: [Ingredient_Type!]!
+  ingredient: [Ingredient!]!
+  creation: [Creation!]!
+
+  link(id: ID!): Link
+}
+
+type Mutation {
+  createLink(url: String!, description: String!): Link!
+  updateLink(id: ID!, url: String, description: String): Link
+  deleteLink(id: ID!): Link
+
+  createUser(first_name: String!, last_name: String!, email: String!, password: String!): User!
+
+  createCreation(user_id: Int!, name: String!, description: String!): Creation!
+
+  createComment(user_id: Int!, text: String!): Comment!
+
+  createSavedRecipe(user_id: Int!, text: String!): Saved_Recipe!
+
+  createIngredientType(name: String!): Ingredient_Type!
+
+  createIngredient(ingredient_type_id: Int!, name: String!): Ingredient!
+}
+
+type Link {
+  id: ID!
+  description: String!
+  url: String!
+}
+
+type User {
+  id: ID!
+  user_id: Int!
+  first_name: String!
+  last_name: String!
+  email: String!
+  password: String!
+}
+
+type Creation {
+  id: ID!
+  user_id: Int!
+  name: String!
+  description: String!
+}
+
+type Comment {
+  id: ID!
+  user_id: Int!
+  text: String!
+}
+
+type Saved_Recipe {
+  id: ID!
+  user_id: Int!
+  recipe_link: String!
+}
+
+type Ingredient_Type {
+  id: ID!
+  name: String!
+}
+
+type Ingredient{
+  id: ID!
+  ingredient_type_id: Int!
+  name: String!
+}
