@@ -153,16 +153,24 @@ const resolvers = {
   Mutation: {
     createLink: (parent, args) => {
       const link = {
-        id: `link-${linkCount++}`,
+        id: `link-${++linkCount}`,
         description: args.description,
         url: args.url,
       }
       links.push(link)
       return link
     },
+    deleteLink: (parent, args) => {
+      links.forEach((link, ind) => {
+        if (link.id === args.id) {
+          links.splice(ind, 1)
+        }
+      })
+      return ('removed', args.id)
+    },
     createUser: (parent, args) => {
       const user = {
-        id: `${userCount++}`,
+        id: `${++userCount}`,
         first_name: args.first_name,
         last_name: args.last_name,
         email: args.email,
@@ -173,7 +181,7 @@ const resolvers = {
     },
     createComment: (parent, args) => {
       const comment = {
-        id: `${commentCount++}`,
+        id: `${++commentCount}`,
         user_id: args.user_id,
         text: args.text
       }
@@ -182,16 +190,16 @@ const resolvers = {
     },
     createSavedRecipe: (parent, args) => {
       const recipe = {
-        id: `${savedRecipeCount++}`,
+        id: `${++savedRecipeCount}`,
         user_id: args.user_id,
         recipe_link: args.recipe_link
       }
-      recipes.push(recipe)
+      saved_recipes.push(recipe)
       return recipe
     },
     createIngredientType: (parent, args) => {
       const ingredientType = {
-        id: `${ingredientTypeCount++}`,
+        id: `${++ingredientTypeCount}`,
         name: args.name
       }
       ingredient_types.push(ingredientType)
@@ -199,7 +207,7 @@ const resolvers = {
     },
     createIngredient: (parent, args) => {
       const ingredient = {
-        id: `${ingredientCount++}`,
+        id: `${++ingredientCount}`,
         name: args.name
       }
       ingredients.push(ingredient)
@@ -207,7 +215,7 @@ const resolvers = {
     },
     createCreation: (parent, args) => {
       const creation = {
-        id: `${creationCount++}`,
+        id: `${++creationCount}`,
         user_id: args.user_id,
         name: args.nam,
         description: args.description

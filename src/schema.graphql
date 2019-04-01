@@ -9,6 +9,7 @@ type Query {
   creation: [Creation!]!
 
   link(id: ID!): Link
+  
 }
 
 type Mutation {
@@ -17,16 +18,28 @@ type Mutation {
   deleteLink(id: ID!): Link
 
   createUser(first_name: String!, last_name: String!, email: String!, password: String!): User!
+  updateUser(id: ID!, first_name: String, last_name: String, email: String, password: String): User
+  deleteUser(id: ID!): User
 
   createCreation(user_id: Int!, name: String!, description: String!): Creation!
+  updateCreation(id: ID!, name: String, description: String): Creation
+  deleteCreation(id: ID!): Creation
 
   createComment(user_id: Int!, text: String!): Comment!
+  updateComment(id: ID!, user_id: Int, text: String): Comment
+  deleteComment(id: ID!): Comment
 
-  createSavedRecipe(user_id: Int!, text: String!): Saved_Recipe!
+  createSavedRecipe(user_id: Int!, recipe_link: String!): Saved_Recipe!
+  updateSavedRecipe(id: ID!, user_id: Int, recipe_link: String): Saved_Recipe
+  deleteSavedRecipe(id: ID!): Saved_Recipe
 
   createIngredientType(name: String!): Ingredient_Type!
+  updateIngredientType(id: ID!, name: String): Ingredient_Type
+  deleteIngredientType(id: ID!): Ingredient_Type
 
   createIngredient(ingredient_type_id: Int!, name: String!): Ingredient!
+  updateIngredient(id: ID!, ingredient_type_id: Int!, name: String): Ingredient
+  deleteIngredient(id: ID!): Ingredient
 }
 
 type Link {
