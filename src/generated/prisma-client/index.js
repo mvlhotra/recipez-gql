@@ -25,10 +25,6 @@ var models = [
     embedded: false
   },
   {
-    name: "Ingredient_Type",
-    embedded: false
-  },
-  {
     name: "Ingredient",
     embedded: false
   }

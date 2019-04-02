@@ -3,11 +3,9 @@ type Query {
   feed: [Link!]!
   user: [User!]!
   comment: [Comment!]!
-  savedRecipe: [Saved_Recipe!]!
-  ingredientType: [Ingredient_Type!]!
+  saved: [Saved_Recipe!]!
   ingredient: [Ingredient!]!
   creation: [Creation!]!
-
   link(id: ID!): Link
   
 }
@@ -21,11 +19,9 @@ type Mutation {
 
   postComment(text: String!): Comment!
 
-  postSavedRecipe(user_id: Int!, recipe_link: String!): Saved_Recipe!
+  postSavedRecipe(recipe_link: String!): Saved_Recipe!
 
-  postIngredientType(name: String!): Ingredient_Type!
-
-  postIngredient(ingredient_type_id: Int!, name: String!): Ingredient!
+  postIngredient(name: String!): Ingredient!
 }
 
 type AuthPayload {
@@ -49,6 +45,7 @@ type User {
   links: [Link!]!
   creations: [Creation!]!
   comments: [Comment!]!
+  saved_recipes: [Saved_Recipe!]!
 }
 
 type Creation {
@@ -56,27 +53,23 @@ type Creation {
   name: String!
   description: String!
   createdBy: User
+  comments: [Comment]
 }
 
 type Comment {
   id: ID!
   text: String!
   addedBy: User
+  forCreation: Creation
 }
 
 type Saved_Recipe {
   id: ID!
-  user_id: Int!
   recipe_link: String!
-}
-
-type Ingredient_Type {
-  id: ID!
-  name: String!
+  savedBy: User
 }
 
 type Ingredient{
   id: ID!
-  ingredient_type_id: Int!
   name: String!
 }

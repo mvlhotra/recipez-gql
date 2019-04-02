@@ -15,10 +15,6 @@ type AggregateIngredient {
   count: Int!
 }
 
-type AggregateIngredient_Type {
-  count: Int!
-}
-
 type AggregateLink {
   count: Int!
 }
@@ -39,6 +35,7 @@ type Comment {
   id: ID!
   text: String!
   addedBy: User
+  forCreation: Creation
 }
 
 type CommentConnection {
@@ -50,6 +47,7 @@ type CommentConnection {
 input CommentCreateInput {
   text: String!
   addedBy: UserCreateOneWithoutCommentsInput
+  forCreation: CreationCreateOneWithoutCommentsInput
 }
 
 input CommentCreateManyWithoutAddedByInput {
@@ -57,8 +55,19 @@ input CommentCreateManyWithoutAddedByInput {
   connect: [CommentWhereUniqueInput!]
 }
 
+input CommentCreateManyWithoutForCreationInput {
+  create: [CommentCreateWithoutForCreationInput!]
+  connect: [CommentWhereUniqueInput!]
+}
+
 input CommentCreateWithoutAddedByInput {
   text: String!
+  forCreation: CreationCreateOneWithoutCommentsInput
+}
+
+input CommentCreateWithoutForCreationInput {
+  text: String!
+  addedBy: UserCreateOneWithoutCommentsInput
 }
 
 type CommentEdge {
@@ -137,6 +146,7 @@ input CommentSubscriptionWhereInput {
 input CommentUpdateInput {
   text: String
   addedBy: UserUpdateOneWithoutCommentsInput
+  forCreation: CreationUpdateOneWithoutCommentsInput
 }
 
 input CommentUpdateManyDataInput {
@@ -159,6 +169,18 @@ input CommentUpdateManyWithoutAddedByInput {
   updateMany: [CommentUpdateManyWithWhereNestedInput!]
 }
 
+input CommentUpdateManyWithoutForCreationInput {
+  create: [CommentCreateWithoutForCreationInput!]
+  delete: [CommentWhereUniqueInput!]
+  connect: [CommentWhereUniqueInput!]
+  set: [CommentWhereUniqueInput!]
+  disconnect: [CommentWhereUniqueInput!]
+  update: [CommentUpdateWithWhereUniqueWithoutForCreationInput!]
+  upsert: [CommentUpsertWithWhereUniqueWithoutForCreationInput!]
+  deleteMany: [CommentScalarWhereInput!]
+  updateMany: [CommentUpdateManyWithWhereNestedInput!]
+}
+
 input CommentUpdateManyWithWhereNestedInput {
   where: CommentScalarWhereInput!
   data: CommentUpdateManyDataInput!
@@ -166,6 +188,12 @@ input CommentUpdateManyWithWhereNestedInput {
 
 input CommentUpdateWithoutAddedByDataInput {
   text: String
+  forCreation: CreationUpdateOneWithoutCommentsInput
+}
+
+input CommentUpdateWithoutForCreationDataInput {
+  text: String
+  addedBy: UserUpdateOneWithoutCommentsInput
 }
 
 input CommentUpdateWithWhereUniqueWithoutAddedByInput {
@@ -173,10 +201,21 @@ input CommentUpdateWithWhereUniqueWithoutAddedByInput {
   data: CommentUpdateWithoutAddedByDataInput!
 }
 
+input CommentUpdateWithWhereUniqueWithoutForCreationInput {
+  where: CommentWhereUniqueInput!
+  data: CommentUpdateWithoutForCreationDataInput!
+}
+
 input CommentUpsertWithWhereUniqueWithoutAddedByInput {
   where: CommentWhereUniqueInput!
   update: CommentUpdateWithoutAddedByDataInput!
   create: CommentCreateWithoutAddedByInput!
+}
+
+input CommentUpsertWithWhereUniqueWithoutForCreationInput {
+  where: CommentWhereUniqueInput!
+  update: CommentUpdateWithoutForCreationDataInput!
+  create: CommentCreateWithoutForCreationInput!
 }
 
 input CommentWhereInput {
@@ -209,6 +248,7 @@ input CommentWhereInput {
   text_ends_with: String
   text_not_ends_with: String
   addedBy: UserWhereInput
+  forCreation: CreationWhereInput
   AND: [CommentWhereInput!]
   OR: [CommentWhereInput!]
   NOT: [CommentWhereInput!]
@@ -223,6 +263,7 @@ type Creation {
   name: String!
   description: String!
   createdBy: User
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
 }
 
 type CreationConnection {
@@ -235,6 +276,7 @@ input CreationCreateInput {
   name: String!
   description: String!
   createdBy: UserCreateOneWithoutCreationsInput
+  comments: CommentCreateManyWithoutForCreationInput
 }
 
 input CreationCreateManyWithoutCreatedByInput {
@@ -242,9 +284,21 @@ input CreationCreateManyWithoutCreatedByInput {
   connect: [CreationWhereUniqueInput!]
 }
 
+input CreationCreateOneWithoutCommentsInput {
+  create: CreationCreateWithoutCommentsInput
+  connect: CreationWhereUniqueInput
+}
+
+input CreationCreateWithoutCommentsInput {
+  name: String!
+  description: String!
+  createdBy: UserCreateOneWithoutCreationsInput
+}
+
 input CreationCreateWithoutCreatedByInput {
   name: String!
   description: String!
+  comments: CommentCreateManyWithoutForCreationInput
 }
 
 type CreationEdge {
@@ -341,6 +395,7 @@ input CreationUpdateInput {
   name: String
   description: String
   createdBy: UserUpdateOneWithoutCreationsInput
+  comments: CommentUpdateManyWithoutForCreationInput
 }
 
 input CreationUpdateManyDataInput {
@@ -370,14 +425,35 @@ input CreationUpdateManyWithWhereNestedInput {
   data: CreationUpdateManyDataInput!
 }
 
+input CreationUpdateOneWithoutCommentsInput {
+  create: CreationCreateWithoutCommentsInput
+  update: CreationUpdateWithoutCommentsDataInput
+  upsert: CreationUpsertWithoutCommentsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: CreationWhereUniqueInput
+}
+
+input CreationUpdateWithoutCommentsDataInput {
+  name: String
+  description: String
+  createdBy: UserUpdateOneWithoutCreationsInput
+}
+
 input CreationUpdateWithoutCreatedByDataInput {
   name: String
   description: String
+  comments: CommentUpdateManyWithoutForCreationInput
 }
 
 input CreationUpdateWithWhereUniqueWithoutCreatedByInput {
   where: CreationWhereUniqueInput!
   data: CreationUpdateWithoutCreatedByDataInput!
+}
+
+input CreationUpsertWithoutCommentsInput {
+  update: CreationUpdateWithoutCommentsDataInput!
+  create: CreationCreateWithoutCommentsInput!
 }
 
 input CreationUpsertWithWhereUniqueWithoutCreatedByInput {
@@ -430,6 +506,9 @@ input CreationWhereInput {
   description_ends_with: String
   description_not_ends_with: String
   createdBy: UserWhereInput
+  comments_every: CommentWhereInput
+  comments_some: CommentWhereInput
+  comments_none: CommentWhereInput
   AND: [CreationWhereInput!]
   OR: [CreationWhereInput!]
   NOT: [CreationWhereInput!]
@@ -441,108 +520,7 @@ input CreationWhereUniqueInput {
 
 type Ingredient {
   id: ID!
-  ingredient_type_id: Int!
   name: String!
-}
-
-type Ingredient_Type {
-  id: ID!
-  name: String!
-}
-
-type Ingredient_TypeConnection {
-  pageInfo: PageInfo!
-  edges: [Ingredient_TypeEdge]!
-  aggregate: AggregateIngredient_Type!
-}
-
-input Ingredient_TypeCreateInput {
-  name: String!
-}
-
-type Ingredient_TypeEdge {
-  node: Ingredient_Type!
-  cursor: String!
-}
-
-enum Ingredient_TypeOrderByInput {
-  id_ASC
-  id_DESC
-  name_ASC
-  name_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type Ingredient_TypePreviousValues {
-  id: ID!
-  name: String!
-}
-
-type Ingredient_TypeSubscriptionPayload {
-  mutation: MutationType!
-  node: Ingredient_Type
-  updatedFields: [String!]
-  previousValues: Ingredient_TypePreviousValues
-}
-
-input Ingredient_TypeSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: Ingredient_TypeWhereInput
-  AND: [Ingredient_TypeSubscriptionWhereInput!]
-  OR: [Ingredient_TypeSubscriptionWhereInput!]
-  NOT: [Ingredient_TypeSubscriptionWhereInput!]
-}
-
-input Ingredient_TypeUpdateInput {
-  name: String
-}
-
-input Ingredient_TypeUpdateManyMutationInput {
-  name: String
-}
-
-input Ingredient_TypeWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  AND: [Ingredient_TypeWhereInput!]
-  OR: [Ingredient_TypeWhereInput!]
-  NOT: [Ingredient_TypeWhereInput!]
-}
-
-input Ingredient_TypeWhereUniqueInput {
-  id: ID
 }
 
 type IngredientConnection {
@@ -552,7 +530,6 @@ type IngredientConnection {
 }
 
 input IngredientCreateInput {
-  ingredient_type_id: Int!
   name: String!
 }
 
@@ -564,8 +541,6 @@ type IngredientEdge {
 enum IngredientOrderByInput {
   id_ASC
   id_DESC
-  ingredient_type_id_ASC
-  ingredient_type_id_DESC
   name_ASC
   name_DESC
   createdAt_ASC
@@ -576,7 +551,6 @@ enum IngredientOrderByInput {
 
 type IngredientPreviousValues {
   id: ID!
-  ingredient_type_id: Int!
   name: String!
 }
 
@@ -599,12 +573,10 @@ input IngredientSubscriptionWhereInput {
 }
 
 input IngredientUpdateInput {
-  ingredient_type_id: Int
   name: String
 }
 
 input IngredientUpdateManyMutationInput {
-  ingredient_type_id: Int
   name: String
 }
 
@@ -623,14 +595,6 @@ input IngredientWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  ingredient_type_id: Int
-  ingredient_type_id_not: Int
-  ingredient_type_id_in: [Int!]
-  ingredient_type_id_not_in: [Int!]
-  ingredient_type_id_lt: Int
-  ingredient_type_id_lte: Int
-  ingredient_type_id_gt: Int
-  ingredient_type_id_gte: Int
   name: String
   name_not: String
   name_in: [String!]
@@ -896,12 +860,6 @@ type Mutation {
   upsertIngredient(where: IngredientWhereUniqueInput!, create: IngredientCreateInput!, update: IngredientUpdateInput!): Ingredient!
   deleteIngredient(where: IngredientWhereUniqueInput!): Ingredient
   deleteManyIngredients(where: IngredientWhereInput): BatchPayload!
-  createIngredient_Type(data: Ingredient_TypeCreateInput!): Ingredient_Type!
-  updateIngredient_Type(data: Ingredient_TypeUpdateInput!, where: Ingredient_TypeWhereUniqueInput!): Ingredient_Type
-  updateManyIngredient_Types(data: Ingredient_TypeUpdateManyMutationInput!, where: Ingredient_TypeWhereInput): BatchPayload!
-  upsertIngredient_Type(where: Ingredient_TypeWhereUniqueInput!, create: Ingredient_TypeCreateInput!, update: Ingredient_TypeUpdateInput!): Ingredient_Type!
-  deleteIngredient_Type(where: Ingredient_TypeWhereUniqueInput!): Ingredient_Type
-  deleteManyIngredient_Types(where: Ingredient_TypeWhereInput): BatchPayload!
   createLink(data: LinkCreateInput!): Link!
   updateLink(data: LinkUpdateInput!, where: LinkWhereUniqueInput!): Link
   updateManyLinks(data: LinkUpdateManyMutationInput!, where: LinkWhereInput): BatchPayload!
@@ -949,9 +907,6 @@ type Query {
   ingredient(where: IngredientWhereUniqueInput!): Ingredient
   ingredients(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ingredient]!
   ingredientsConnection(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IngredientConnection!
-  ingredient_Type(where: Ingredient_TypeWhereUniqueInput!): Ingredient_Type
-  ingredient_Types(where: Ingredient_TypeWhereInput, orderBy: Ingredient_TypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ingredient_Type]!
-  ingredient_TypesConnection(where: Ingredient_TypeWhereInput, orderBy: Ingredient_TypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): Ingredient_TypeConnection!
   link(where: LinkWhereUniqueInput!): Link
   links(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Link]!
   linksConnection(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LinkConnection!
@@ -966,8 +921,8 @@ type Query {
 
 type Saved_Recipe {
   id: ID!
-  user_id: Int!
   recipe_link: String!
+  savedBy: User
 }
 
 type Saved_RecipeConnection {
@@ -977,7 +932,16 @@ type Saved_RecipeConnection {
 }
 
 input Saved_RecipeCreateInput {
-  user_id: Int!
+  recipe_link: String!
+  savedBy: UserCreateOneWithoutSavedInput
+}
+
+input Saved_RecipeCreateManyWithoutSavedByInput {
+  create: [Saved_RecipeCreateWithoutSavedByInput!]
+  connect: [Saved_RecipeWhereUniqueInput!]
+}
+
+input Saved_RecipeCreateWithoutSavedByInput {
   recipe_link: String!
 }
 
@@ -989,8 +953,6 @@ type Saved_RecipeEdge {
 enum Saved_RecipeOrderByInput {
   id_ASC
   id_DESC
-  user_id_ASC
-  user_id_DESC
   recipe_link_ASC
   recipe_link_DESC
   createdAt_ASC
@@ -1001,8 +963,41 @@ enum Saved_RecipeOrderByInput {
 
 type Saved_RecipePreviousValues {
   id: ID!
-  user_id: Int!
   recipe_link: String!
+}
+
+input Saved_RecipeScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  recipe_link: String
+  recipe_link_not: String
+  recipe_link_in: [String!]
+  recipe_link_not_in: [String!]
+  recipe_link_lt: String
+  recipe_link_lte: String
+  recipe_link_gt: String
+  recipe_link_gte: String
+  recipe_link_contains: String
+  recipe_link_not_contains: String
+  recipe_link_starts_with: String
+  recipe_link_not_starts_with: String
+  recipe_link_ends_with: String
+  recipe_link_not_ends_with: String
+  AND: [Saved_RecipeScalarWhereInput!]
+  OR: [Saved_RecipeScalarWhereInput!]
+  NOT: [Saved_RecipeScalarWhereInput!]
 }
 
 type Saved_RecipeSubscriptionPayload {
@@ -1024,13 +1019,48 @@ input Saved_RecipeSubscriptionWhereInput {
 }
 
 input Saved_RecipeUpdateInput {
-  user_id: Int
+  recipe_link: String
+  savedBy: UserUpdateOneWithoutSavedInput
+}
+
+input Saved_RecipeUpdateManyDataInput {
   recipe_link: String
 }
 
 input Saved_RecipeUpdateManyMutationInput {
-  user_id: Int
   recipe_link: String
+}
+
+input Saved_RecipeUpdateManyWithoutSavedByInput {
+  create: [Saved_RecipeCreateWithoutSavedByInput!]
+  delete: [Saved_RecipeWhereUniqueInput!]
+  connect: [Saved_RecipeWhereUniqueInput!]
+  set: [Saved_RecipeWhereUniqueInput!]
+  disconnect: [Saved_RecipeWhereUniqueInput!]
+  update: [Saved_RecipeUpdateWithWhereUniqueWithoutSavedByInput!]
+  upsert: [Saved_RecipeUpsertWithWhereUniqueWithoutSavedByInput!]
+  deleteMany: [Saved_RecipeScalarWhereInput!]
+  updateMany: [Saved_RecipeUpdateManyWithWhereNestedInput!]
+}
+
+input Saved_RecipeUpdateManyWithWhereNestedInput {
+  where: Saved_RecipeScalarWhereInput!
+  data: Saved_RecipeUpdateManyDataInput!
+}
+
+input Saved_RecipeUpdateWithoutSavedByDataInput {
+  recipe_link: String
+}
+
+input Saved_RecipeUpdateWithWhereUniqueWithoutSavedByInput {
+  where: Saved_RecipeWhereUniqueInput!
+  data: Saved_RecipeUpdateWithoutSavedByDataInput!
+}
+
+input Saved_RecipeUpsertWithWhereUniqueWithoutSavedByInput {
+  where: Saved_RecipeWhereUniqueInput!
+  update: Saved_RecipeUpdateWithoutSavedByDataInput!
+  create: Saved_RecipeCreateWithoutSavedByInput!
 }
 
 input Saved_RecipeWhereInput {
@@ -1048,14 +1078,6 @@ input Saved_RecipeWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  user_id: Int
-  user_id_not: Int
-  user_id_in: [Int!]
-  user_id_not_in: [Int!]
-  user_id_lt: Int
-  user_id_lte: Int
-  user_id_gt: Int
-  user_id_gte: Int
   recipe_link: String
   recipe_link_not: String
   recipe_link_in: [String!]
@@ -1070,6 +1092,7 @@ input Saved_RecipeWhereInput {
   recipe_link_not_starts_with: String
   recipe_link_ends_with: String
   recipe_link_not_ends_with: String
+  savedBy: UserWhereInput
   AND: [Saved_RecipeWhereInput!]
   OR: [Saved_RecipeWhereInput!]
   NOT: [Saved_RecipeWhereInput!]
@@ -1083,7 +1106,6 @@ type Subscription {
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
   creation(where: CreationSubscriptionWhereInput): CreationSubscriptionPayload
   ingredient(where: IngredientSubscriptionWhereInput): IngredientSubscriptionPayload
-  ingredient_Type(where: Ingredient_TypeSubscriptionWhereInput): Ingredient_TypeSubscriptionPayload
   link(where: LinkSubscriptionWhereInput): LinkSubscriptionPayload
   saved_Recipe(where: Saved_RecipeSubscriptionWhereInput): Saved_RecipeSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
@@ -1098,6 +1120,7 @@ type User {
   links(where: LinkWhereInput, orderBy: LinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Link!]
   creations(where: CreationWhereInput, orderBy: CreationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Creation!]
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+  saved(where: Saved_RecipeWhereInput, orderBy: Saved_RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Saved_Recipe!]
 }
 
 type UserConnection {
@@ -1114,6 +1137,7 @@ input UserCreateInput {
   links: LinkCreateManyWithoutPostedByInput
   creations: CreationCreateManyWithoutCreatedByInput
   comments: CommentCreateManyWithoutAddedByInput
+  saved: Saved_RecipeCreateManyWithoutSavedByInput
 }
 
 input UserCreateOneWithoutCommentsInput {
@@ -1131,6 +1155,11 @@ input UserCreateOneWithoutLinksInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutSavedInput {
+  create: UserCreateWithoutSavedInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateWithoutCommentsInput {
   first_name: String!
   last_name: String!
@@ -1138,6 +1167,7 @@ input UserCreateWithoutCommentsInput {
   password: String!
   links: LinkCreateManyWithoutPostedByInput
   creations: CreationCreateManyWithoutCreatedByInput
+  saved: Saved_RecipeCreateManyWithoutSavedByInput
 }
 
 input UserCreateWithoutCreationsInput {
@@ -1147,6 +1177,7 @@ input UserCreateWithoutCreationsInput {
   password: String!
   links: LinkCreateManyWithoutPostedByInput
   comments: CommentCreateManyWithoutAddedByInput
+  saved: Saved_RecipeCreateManyWithoutSavedByInput
 }
 
 input UserCreateWithoutLinksInput {
@@ -1154,6 +1185,17 @@ input UserCreateWithoutLinksInput {
   last_name: String!
   email: String!
   password: String!
+  creations: CreationCreateManyWithoutCreatedByInput
+  comments: CommentCreateManyWithoutAddedByInput
+  saved: Saved_RecipeCreateManyWithoutSavedByInput
+}
+
+input UserCreateWithoutSavedInput {
+  first_name: String!
+  last_name: String!
+  email: String!
+  password: String!
+  links: LinkCreateManyWithoutPostedByInput
   creations: CreationCreateManyWithoutCreatedByInput
   comments: CommentCreateManyWithoutAddedByInput
 }
@@ -1214,6 +1256,7 @@ input UserUpdateInput {
   links: LinkUpdateManyWithoutPostedByInput
   creations: CreationUpdateManyWithoutCreatedByInput
   comments: CommentUpdateManyWithoutAddedByInput
+  saved: Saved_RecipeUpdateManyWithoutSavedByInput
 }
 
 input UserUpdateManyMutationInput {
@@ -1250,6 +1293,15 @@ input UserUpdateOneWithoutLinksInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdateOneWithoutSavedInput {
+  create: UserCreateWithoutSavedInput
+  update: UserUpdateWithoutSavedDataInput
+  upsert: UserUpsertWithoutSavedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateWithoutCommentsDataInput {
   first_name: String
   last_name: String
@@ -1257,6 +1309,7 @@ input UserUpdateWithoutCommentsDataInput {
   password: String
   links: LinkUpdateManyWithoutPostedByInput
   creations: CreationUpdateManyWithoutCreatedByInput
+  saved: Saved_RecipeUpdateManyWithoutSavedByInput
 }
 
 input UserUpdateWithoutCreationsDataInput {
@@ -1266,6 +1319,7 @@ input UserUpdateWithoutCreationsDataInput {
   password: String
   links: LinkUpdateManyWithoutPostedByInput
   comments: CommentUpdateManyWithoutAddedByInput
+  saved: Saved_RecipeUpdateManyWithoutSavedByInput
 }
 
 input UserUpdateWithoutLinksDataInput {
@@ -1273,6 +1327,17 @@ input UserUpdateWithoutLinksDataInput {
   last_name: String
   email: String
   password: String
+  creations: CreationUpdateManyWithoutCreatedByInput
+  comments: CommentUpdateManyWithoutAddedByInput
+  saved: Saved_RecipeUpdateManyWithoutSavedByInput
+}
+
+input UserUpdateWithoutSavedDataInput {
+  first_name: String
+  last_name: String
+  email: String
+  password: String
+  links: LinkUpdateManyWithoutPostedByInput
   creations: CreationUpdateManyWithoutCreatedByInput
   comments: CommentUpdateManyWithoutAddedByInput
 }
@@ -1290,6 +1355,11 @@ input UserUpsertWithoutCreationsInput {
 input UserUpsertWithoutLinksInput {
   update: UserUpdateWithoutLinksDataInput!
   create: UserCreateWithoutLinksInput!
+}
+
+input UserUpsertWithoutSavedInput {
+  update: UserUpdateWithoutSavedDataInput!
+  create: UserCreateWithoutSavedInput!
 }
 
 input UserWhereInput {
@@ -1372,6 +1442,9 @@ input UserWhereInput {
   comments_every: CommentWhereInput
   comments_some: CommentWhereInput
   comments_none: CommentWhereInput
+  saved_every: Saved_RecipeWhereInput
+  saved_some: Saved_RecipeWhereInput
+  saved_none: Saved_RecipeWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

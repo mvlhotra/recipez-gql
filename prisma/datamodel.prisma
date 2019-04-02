@@ -14,6 +14,7 @@ type User {
   links: [Link!]!
   creations: [Creation!]!
   comments: [Comment!]!
+  saved: [Saved_Recipe!]!
 }
 
 type Creation {
@@ -21,28 +22,24 @@ type Creation {
   name: String!
   description: String!
   createdBy: User
+  comments: [Comment]
 }
 
 type Comment {
   id: ID! @unique
   text: String!
   addedBy: User
-  # NEED TO ADD CREATION RELATION
+  forCreation: Creation
+  
 }
 
 type Saved_Recipe {
   id: ID! @unique
-  user_id: Int!
   recipe_link: String!
-}
-
-type Ingredient_Type {
-  id: ID! @unique
-  name: String!
+  savedBy: User
 }
 
 type Ingredient{
   id: ID! @unique
-  ingredient_type_id: Int!
   name: String!
 }

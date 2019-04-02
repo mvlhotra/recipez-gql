@@ -16,17 +16,34 @@ function postCreation(root, args, context) {
   return context.prisma.createCreation({
     name: args.name,
     description: args.description,
-    createdBy: { connect: { id: userId } }
+    createdBy: { connect: { id: userId } },
   })
 }
 
 function postComment(root, args, context) {
   const userId = getUserId(context)
+  const creationId = getCreationId(context)
   return context.prisma.createComment({
     text: args.text,
-    addedBy: { connect: { id: userId } }
+    addedBy: { connect: { id: userId } },
+    forCreation: creationId,
   })
 }
+
+function postSavedRecipe(root, args, context) {
+  const userId = getUserId(context)
+  return context.prisma.createSavedRecipe({
+    recipe_link: args.recipe_link,
+    savedBy: { connect: { id: userId } },
+  })
+}
+
+function postIngredient(root, args, context) {
+  return context.prisma.createIngredient({
+    name: args.name,
+  })
+}
+
 
 // User signup
 async function signup(parent, args, context, info) {
@@ -63,4 +80,6 @@ module.exports = {
   post,
   postCreation,
   postComment,
+  postSavedRecipe,
+  postIngredient
 }
